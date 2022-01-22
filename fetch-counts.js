@@ -1,13 +1,7 @@
 const fetch = require('node-fetch');
 
-fetch('https://aws.amazon.com/')
-    .then(res => res.text())
+fetch('https://aws.amazon.com/api/dirs/items/search?item.directoryId=aws-products&item.locale=en_US&tags.id=!aws-products%23type%23feature&tags.id=!aws-products%23type%23variant')
+    .then(res => res.json())
     .then(body => {
-        let bodySplit = body.split("lb-content-item");
-        let items = [];
-        bodySplit.forEach((item, i) => {if (i > 0 && i < bodySplit.length - 1) items.push(item);});
-        items = items.map(item => item.split('<span>')[0])
-        items = items.map(item => item.split('so-exp=below"> ')[1]);
-        
-        console.log(items.length);
+        console.log(body.metadata.totalHits);
     }).catch(err => console.log(err))
